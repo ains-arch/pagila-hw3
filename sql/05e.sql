@@ -28,18 +28,7 @@ JOIN (
     JOIN film USING (film_id)
     WHERE title = 'AMERICAN CIRCUS'
 ) am_categories ON fc.category_id = am_categories.category_id
-WHERE f.film_id != (
-    SELECT film_id
-    FROM film
-    WHERE title = 'AMERICAN CIRCUS'
-)
 GROUP BY f.film_id, f.title
-HAVING COUNT(DISTINCT fc.category_id) = 2
-
-UNION
-
-SELECT title
-FROM film
-WHERE title = 'AMERICAN CIRCUS'
+HAVING COUNT(DISTINCT fc.category_id) = 2 OR f.title = 'AMERICAN CIRCUS'
 
 ORDER BY title;
